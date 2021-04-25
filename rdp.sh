@@ -1,3 +1,7 @@
+#! /bin/bash
+printf "setup loading" >&2
+{
+sed -i 's/\/bin\/sh/\/bin\/bash/g' /etc/passwd
 sudo apt-get update
 wget https://dl.google.com/linux/direct/chrome-remote-desktop_current_amd64.deb
 sudo dpkg --install chrome-remote-desktop_current_amd64.deb
@@ -16,4 +20,9 @@ sudo apt -y install firefox
 sudo apt -y install qbittorrent
 sudo apt install nload
 sudo adduser ALOK chrome-remote-desktop
-
+} &> /dev/null &&
+printf "\nSetup Completed " >&2 ||
+printf "\nError Occured " >&2
+printf '\nCheck https://remotedesktop.google.com/headless  Copy Command Of Debian Linux And Paste Down\n'
+read -p "Paste Here: " CRP
+printf 'Check https://remotedesktop.google.com/access/ \n'
