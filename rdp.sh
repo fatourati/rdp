@@ -29,6 +29,3 @@ su - ALOK -c """$CRP"""
 printf 'Check https://remotedesktop.google.com/access/ \n'
 printf 'Your SUDO Pasword Is 8426 \n'
  &> /dev/null
-
-
-! ./RDP.sh
