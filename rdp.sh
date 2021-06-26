@@ -1,37 +1,27 @@
-#!/bin/bash
-
-g="\033[1;32m"
-y="\033[1;33m"
-w="\033[0;37m"
-if [ -e chrome-remote-desktop_current_amd64.deb ]
-then
-    sudo dpkg --install chrome-remote-desktop_current_amd64.deb
-    sudo apt install --assume-yes --fix-broken
-else
-    wget https://dl.google.com/linux/direct/chrome-remote-desktop_current_amd64.deb 
-    sudo dpkg --install chrome-remote-desktop_current_amd64.deb
-    sudo apt install --assume-yes --fix-broken
-fi
-DEBIAN_FRONTEND=noninteractive
-apt install --assume-yes xfce4 desktop-base
-sudo bash -c 'echo "exec /etc/X11/Xsession /usr/bin/xfce4-session" > /etc/chrome-remote-desktop-session'
-sudo apt install --assume-yes xscreensaver
+#! /bin/bash
+printf "setup loading" >&2
+{
+sed -i 's/\/bin\/sh/\/bin\/bash/g' /etc/passwd
+sudo apt-get update
+wget https://dl.google.com/linux/direct/chrome-remote-desktop_current_amd64.deb
+sudo dpkg --install chrome-remote-desktop_current_amd64.deb
 sudo apt install --assume-yes --fix-broken
+sudo DEBIAN_FRONTEND=noninteractive \
+apt install --assume-yes xfce4 desktop-base
+sudo bash -c 'echo "exec /etc/X11/Xsession /usr/bin/xfce4-session" > /etc/chrome-remote-desktop-session'  
+sudo apt install --assume-yes xscreensaver
 sudo systemctl disable lightdm.service
-if [ -e google-chrome-stable_current_amd64.deb ]
-then
-
-    sudo dpkg --install google-chrome-stable_current_amd64.deb
-    sudo apt install --assume-yes --fix-broken
-else
-    wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb 
-    sudo dpkg --install google-chrome-stable_current_amd64.deb
-    sudo apt install --assume-yes --fix-broken
-fi
-sudo apt install nautilus nano -y
-sudo adduser $USER chrome-remote-desktop
-clear
-echo -e "${w}  Visit: https://remotedesktop.google.com/headless"
-read -p "   Command: " cmnd;
-su - $USER -c """${cmnd}"""
-echo -e "\n${g}[+] ${w}Selesai silahkan buka Aplikasi/Website Chrome Remote Desktop"
+wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+sudo dpkg --install google-chrome-stable_current_amd64.deb
+sudo apt install --assume-yes --fix-broken
+sudo apt install nautilus nano -y 
+sudo apt -y install obs-studio
+sudo apt -y install firefox
+sudo apt -y install qbittorrent
+sudo apt install nload
+} &> /dev/null &&
+printf "\nSetup Completed " >&2 ||
+printf "\nError Occured " >&2
+printf '\nCheck https://remotedesktop.google.com/headless  Copy Command Of Debian Linux And Paste Down\n'
+read -p "Paste Here: " CRP
+printf 'Check https://remotedesktop.google.com/access/ \n'
